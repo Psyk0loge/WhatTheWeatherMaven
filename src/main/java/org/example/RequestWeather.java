@@ -14,6 +14,9 @@ import java.util.Scanner;
 
 public class RequestWeather {
     //Api-Key
+    /***
+     * appid is a variable that safes the API-Key for weather requests
+     */
     private static final String appid= "9ffde3100f0029f1e405581994739b1e";
 
     //URL parts to get the longitude and the latitude
@@ -36,6 +39,13 @@ public class RequestWeather {
         currentWeather a = verbindung(true);
         System.out.println(a.getTemp());
     }
+
+    /**
+     *This Method parses the JSON-File we recieve for our request
+     * to safe the Longitude and the Latitude
+     *
+     * * @param response ist ein Parameter, der sachen macht
+     */
     public static void parse1(String response)  {
 
         JSONObject WeatherStats = null;
