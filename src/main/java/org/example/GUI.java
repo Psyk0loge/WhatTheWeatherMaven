@@ -5,11 +5,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
+
 public class GUI extends JFrame{
     //Gui Stuff
     JPanel content = new JPanel(new GridLayout(3,1));
     JPanel Top = new JPanel(new GridLayout(1,2));
-    JPanel TopLeft = new JPanel(new GridLayout(3,1));
+    JPanel TopLeft = new JPanel(new GridLayout(4,2));
     JPanel TopRight = new JPanel(new GridLayout(3,1));
     JPanel Center = new JPanel();
     JPanel Bottom = new JPanel(new GridLayout(1,7));
@@ -24,7 +26,7 @@ public class GUI extends JFrame{
     JLabel kurzBeschreibung = new JLabel();
     JLabel Temp = new JLabel();
     JTextField EingabeStadt = new JTextField();
-    JButton startAbfrage = new JButton("Wetter Abfragen");
+    JButton startAbfrage = new JButton("Windgeschwindigkeit");
     JLabel TagAusgabe = new JLabel("Tag");
     JLabel Uhrzeit = new JLabel("Uhrzeit");
     JLabel ImageAusgabe = new JLabel();
@@ -34,6 +36,8 @@ public class GUI extends JFrame{
 
 
     public GUI(){
+        Dimension a = new Dimension(10,10);
+        TopLeft.setMaximumSize(a);
         Dimension d = new Dimension(650,650);
         this.setPreferredSize(d);
         TopLeft.add(EingabeStadt);
@@ -41,6 +45,8 @@ public class GUI extends JFrame{
         TopLeft.add(TagAusgabe);
         TopLeft.add(Uhrzeit);
         TopLeft.add(ImageAusgabe);
+        TopLeft.add(Temp);
+        TopLeft.add(kurzBeschreibung);
         Top.add(TopLeft);
 
 
@@ -68,6 +74,7 @@ public class GUI extends JFrame{
 
 
 
+
     }
     ActionListener btn_startAbfrage = new ActionListener() {
         @Override
@@ -85,7 +92,7 @@ public class GUI extends JFrame{
             double bewölkung = cuWeather.getCloudines();
             Bewölkungsausgabe.setText("Bewölkung: "+Double.toString(bewölkung)+" %");
             double temp=cuWeather.getTemp();
-            Temp.setText(Double.toString(temp));
+            Temp.setText("Aktuell: "+Double.toString(temp)+" Grad");
             ImageAusgabe.setIcon(cuWeather.img_Weather);
             for(int i=0;i<7;i++){
                 DailyForcastWeather c = cuWeather.getNextDay(i);
@@ -94,7 +101,6 @@ public class GUI extends JFrame{
                 d.setMinTemp(cuWeather.Next7Days[i].getMinTemp());
                 d.setIconAusgabe(cuWeather.Next7Days[i].img_Weather);
             }
-
         }
     };
 
