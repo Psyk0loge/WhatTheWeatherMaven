@@ -2,77 +2,101 @@ package org.example;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GUI extends JFrame{
+    //Gui Stuff
+    JPanel content = new JPanel(new GridLayout(3,1));
+    JPanel Top = new JPanel(new GridLayout(1,2));
+    JPanel TopLeft = new JPanel(new GridLayout(3,1));
+    JPanel TopRight = new JPanel(new GridLayout(3,1));
+    JPanel Center = new JPanel();
+    JPanel Bottom = new JPanel(new GridLayout(1,7));
+
     RequestWeather b = new RequestWeather();
-    Weather cuweather =new Weather();
+
+
+
+    JLabel LuftfeuchtigkeitsAusgabe = new JLabel("Luftfeuchtigkeit");
+    JLabel WindAusgabe = new JLabel("WindAusgabe");
+    JLabel Bewölkungsausgabe= new JLabel("Bewölkungsausgabe");
+    JLabel kurzBeschreibung = new JLabel();
+    JLabel Temp = new JLabel();
+    JTextField EingabeStadt = new JTextField();
+    JButton startAbfrage = new JButton("Wetter Abfragen");
+    JLabel TagAusgabe = new JLabel("Tag");
+    JLabel Uhrzeit = new JLabel("Uhrzeit");
+    JLabel ImageAusgabe = new JLabel("hier bild");
+    JLabel TemperaturVerlauf = new JLabel("Hier kommt später der Graph");
+    DayPreview[] tage = new DayPreview[7];
+
+
 
     public GUI(){
-        this.setLayout(new BorderLayout());
-
-        /***
-         * Top is a JPanel with a Gridlayout that orders the Elements in a row
-         * The JPanel is placed at the top of the user Interface
-         */
-        JPanel Top = new JPanel(new GridLayout(1,4));
-        JTextField StadtEingabe = new JTextField("Bitte Stadt eingeben");
-        JLabel kurzBeschreibung = new JLabel("fff");
-        JLabel datum = new JLabel("fff");
-        JLabel tag = new JLabel("fff");
-        Top.add(StadtEingabe);
-        Top.add(kurzBeschreibung);
-        Top.add(datum);
-        Top.add(tag);
+        Dimension d = new Dimension(650,650);
+        this.setPreferredSize(d);
+        TopLeft.add(EingabeStadt);
+        TopLeft.add(startAbfrage);
+        TopLeft.add(TagAusgabe);
+        TopLeft.add(Uhrzeit);
+        TopLeft.add(ImageAusgabe);
+        Top.add(TopLeft);
 
 
-        JPanel Left = new JPanel(new GridLayout(3,2));
-        JLabel Niederschlag = new JLabel("Niederschlag");
-        JTextField NiederschlagAusgabe = new JTextField("Niederschlag");
-        JLabel Luftfeuchtigkeit = new JLabel("Luftfeuchtigkeit");
-        JTextField LuftfeuchtigkeitsAusgabe = new JTextField("Luftfeuchtigkeit");
-        JLabel Wind = new JLabel("Wind");
-        JTextField WindAusgabe = new JTextField("WindAusgabe");
-        Left.add(Niederschlag);
-        Left.add(NiederschlagAusgabe);
-        Left.add(Luftfeuchtigkeit);
-        Left.add(LuftfeuchtigkeitsAusgabe);
-        Left.add(Wind);
-        Left.add(WindAusgabe);
+        TopRight.add(WindAusgabe);
+        TopRight.add(LuftfeuchtigkeitsAusgabe);
+        TopRight.add(Bewölkungsausgabe);
+        Top.add(TopRight);
+        content.add(Top);
 
-        /**
-         * Center Panel
-         */
-        JPanel Abfrage = new JPanel(new GridLayout(3,1));
-        JLabel Anweisung = new JLabel("Bitte geben Sie eine Stadt ein");
-        JTextField EingabeStadt = new JTextField();
-        JButton start = new JButton("WetterAbfragen");
-        Abfrage.add(Anweisung);
-        Abfrage.add(EingabeStadt);
-        Abfrage.add(start);
+        Center.add(TemperaturVerlauf);
+        content.add(Center);
+
+        for(int i =0;i<7;i++){
+           tage[i]= new DayPreview();
+           Bottom.add(tage[i]);
+        }
+        content.add(Bottom);
+        startAbfrage.addActionListener(btn_startAbfrage);
 
 
+      this.add(content);
+      this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+      this.setVisible(true);
+      this.pack();
 
-
-
-        this.add(Top,BorderLayout.NORTH);
-        this.add(Left,BorderLayout.EAST);
-        this.add(Abfrage,BorderLayout.CENTER);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.pack();
-        Dimension preffered = new Dimension(600,600);
-        setPreferredSize(preffered);
-        setVisible(true);
-        this.pack();
-
-        cuweather = b.RequestTheWeather();
 
 
     }
+    ActionListener btn_startAbfrage = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            b.setCity(EingabeStadt.getText());
+            currentWeather cuWeather = b.verbindung(true);
+            EingabeStadt.setText(cuWeather.getCity());
+            kurzBeschreibung.setText(cuWeather.getDescription());
+            double windSpeed = cuWeather.getWindSpeed();
+            String windSpeedS = Double.toString(windSpeed);
+            double Luftfeuchte = cuWeather.getHumidity();
+            String Luftfeuchtigkeit = Luftfeuchte +" %";
+            LuftfeuchtigkeitsAusgabe.setText("Luftfeuchtigkeit: "+Luftfeuchtigkeit);
+            WindAusgabe.setText("Windgeschwindigkeit: "+windSpeedS +" KM/H");
+            double bewölkung = cuWeather.getCloudines();
+            Bewölkungsausgabe.setText("Bewölkung: "+Double.toString(bewölkung)+" %");
+            double temp=cuWeather.getTemp();
+            Temp.setText(Double.toString(temp));
+            for(int i=0;i<7;i++){
+                DailyForcastWeather c = cuWeather.getNextDay(i);
+                DayPreview d = tage[i];
+                d.setMaxTemp(cuWeather.Next7Days[i].getMaxTemp());
+                d.setMinTemp(cuWeather.Next7Days[i].getMinTemp());
+            }
+
+        }
+    };
 
     public static void main(String[] args) {
-       new GUI();
-       // System.out.println(c.a.getDescription());
-
-
+        new GUI();
     }
 }

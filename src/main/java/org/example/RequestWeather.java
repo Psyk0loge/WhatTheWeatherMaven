@@ -29,19 +29,19 @@ public class RequestWeather {
     private String URLmidDataRequest = "&%20exclude=hourly&appid=";
     private String LatURL="lat=";
     private String LonURL="&lon=";
+    private String city;
+
+    public void setCity(String city){
+        this.city = city;
+    }
 
     //changable lon and lat Strings for dynamic request
     public double Lat;
     public double Lon;
 
-    public RequestWeather(){
-
-    }
-
-    public Weather RequestTheWeather(){
+    public Weather RequestWeather(){
        return verbindung(true);
     }
-
 
     /**
      *This Method parses the JSON-File we recieve for our request
@@ -50,39 +50,61 @@ public class RequestWeather {
      */
     public void parse1(String response)  {
 
-        JSONObject WeatherStats = null;
+        JSONObject GeoStats = null;
         try {
-            WeatherStats = new JSONObject(response);
-            double lon = WeatherStats.getJSONObject("coord").getDouble("lon");
-            double lat = WeatherStats.getJSONObject("coord").getDouble("lat");
+            GeoStats = new JSONObject(response);
+            double lon = GeoStats.getJSONObject("coord").getDouble("lon");
+            double lat = GeoStats.getJSONObject("coord").getDouble("lat");
             Lon = lon;
             Lat = lat;
             System.out.println(lon);
             System.out.println(lat);
-            double[] geoData = {lon,lat};
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
-
-
     /***
      *This method parses the JSON of the second request we make to the API-Url an safes the values in an Object of Weather
      * @param responseBody ist das JSON das von unserem zweiten Request an die Api kommt und eingelesen wurde
      *
      * @return
      */
-    public Weather parse2(String responseBody){
-        JSONObject currentWeather = null;
-        Weather a = new Weather();
+    public currentWeather parse2(String responseBody){
+        JSONObject currentWeather;
+        currentWeather a = new currentWeather();
         try {
             currentWeather = new JSONObject(responseBody);
+            a.setCity(city);
             a.setTemp(currentWeather.getJSONObject("current").getDouble("temp"));
             a.setDescription( currentWeather.getJSONObject("current").getJSONArray("weather").getJSONObject(0).getString("description"));
+            a.setHumidity(currentWeather.getJSONObject("current").getInt("humidity"));
+            a.setCloudines(currentWeather.getJSONObject("current").getDouble("clouds"));
+            a.setWindSpeed(currentWeather.getJSONObject("current").getDouble("wind_speed"));
+            for(int i=0;i<47;i++){
+              JSONObject zwischenWeather= (JSONObject) (currentWeather.getJSONArray("hourly").getJSONObject(i));
+               currentWeather zwischenWeatherWeather = new currentWeather();
+               double temp =zwischenWeatherWeather.getTemp();
+                a.setNext48Hours(i,temp);
+            }
+
+                JSONArray daily= (currentWeather.getJSONArray("daily"));
+                for(int i=0;i<7;i++) {
+                    DailyForcastWeather zwischenWetter = new DailyForcastWeather();
+                    JSONObject zwischenWeather = daily.getJSONObject(i);
+                    zwischenWetter.city = city;
+                    zwischenWetter.setMaxTemp(zwischenWeather.getJSONObject("temp").getDouble("max"));
+                    zwischenWetter.setMinTemp(zwischenWeather.getJSONObject("temp").getDouble("min"));
+                    zwischenWetter.setDescription(zwischenWeather.getJSONArray("weather").getJSONObject(0).getString("description"));
+                    zwischenWetter.setHumidity(zwischenWeather.getInt("humidity"));
+                    zwischenWetter.setCloudines(zwischenWeather.getInt("clouds"));
+                    zwischenWetter.setWindSpeed(zwischenWeather.getDouble("wind_speed"));
+                    a.setNext7Days(i, zwischenWetter);
+                }
             return a;
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        System.out.println(a.getDescription());
        return a;
     }
 
@@ -94,24 +116,20 @@ public class RequestWeather {
      * @param geoAbfrage mit diesem Parameter ändert sich das Verhalten innerhalb der Methode
      * @return
      */
-    public Weather verbindung(boolean geoAbfrage){
+    public currentWeather verbindung(boolean geoAbfrage){
         String URLString;
         BufferedReader reader;
         String line;
         StringBuffer responseContent = new StringBuffer();
-        Weather b = new Weather();
+        currentWeather b = new currentWeather();
         if(geoAbfrage){
-            System.out.println("Von was für einer Stadt wollen Sie das Wetter wissen?");
-            String city;
-            Scanner scan = new Scanner(System.in);
-            city = scan.nextLine();
-            scan.close();
             URLString = WebsideForRequest + city + URLmidCode +appid;
         }else{
             URLString = WebsideDataRequest + LatURL+Lat+LonURL+Lon+URLmidDataRequest+appid;;
         }
         try {
             URL url = new URL(URLString);
+            System.out.println(url);
             connection= (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setConnectTimeout(5000);
