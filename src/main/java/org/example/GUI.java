@@ -27,7 +27,7 @@ public class GUI extends JFrame{
     JButton startAbfrage = new JButton("Wetter Abfragen");
     JLabel TagAusgabe = new JLabel("Tag");
     JLabel Uhrzeit = new JLabel("Uhrzeit");
-    JLabel ImageAusgabe = new JLabel("hier bild");
+    JLabel ImageAusgabe = new JLabel();
     JLabel TemperaturVerlauf = new JLabel("Hier kommt später der Graph");
     DayPreview[] tage = new DayPreview[7];
 
@@ -86,11 +86,13 @@ public class GUI extends JFrame{
             Bewölkungsausgabe.setText("Bewölkung: "+Double.toString(bewölkung)+" %");
             double temp=cuWeather.getTemp();
             Temp.setText(Double.toString(temp));
+            ImageAusgabe.setIcon(cuWeather.img_Weather);
             for(int i=0;i<7;i++){
                 DailyForcastWeather c = cuWeather.getNextDay(i);
                 DayPreview d = tage[i];
                 d.setMaxTemp(cuWeather.Next7Days[i].getMaxTemp());
                 d.setMinTemp(cuWeather.Next7Days[i].getMinTemp());
+                d.setIconAusgabe(cuWeather.Next7Days[i].img_Weather);
             }
 
         }

@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,6 +24,11 @@ public class RequestWeather {
     private final String WebsideForRequest ="http://api.openweathermap.org/data/2.5/weather?q=";
     private final String URLmidCode ="&units=metric&appid=";
     private HttpURLConnection connection;
+
+    //URL part for icon request
+    private final String WebsideForIcon="http://openweathermap.org/img/w/";
+    private final String WebsideForIconEnd=".png";
+
 
     //URL stuff to get the data
     private final String WebsideDataRequest ="https://api.openweathermap.org/data/2.5/onecall?";
@@ -74,12 +80,19 @@ public class RequestWeather {
         currentWeather a = new currentWeather();
         try {
             currentWeather = new JSONObject(responseBody);
+
+            JSONObject WeatherStats = (currentWeather.getJSONObject("current"));
             a.setCity(city);
-            a.setTemp(currentWeather.getJSONObject("current").getDouble("temp"));
-            a.setDescription( currentWeather.getJSONObject("current").getJSONArray("weather").getJSONObject(0).getString("description"));
-            a.setHumidity(currentWeather.getJSONObject("current").getInt("humidity"));
-            a.setCloudines(currentWeather.getJSONObject("current").getDouble("clouds"));
-            a.setWindSpeed(currentWeather.getJSONObject("current").getDouble("wind_speed"));
+            a.setTemp(WeatherStats.getDouble("temp"));
+            a.setDescription( WeatherStats.getJSONArray("weather").getJSONObject(0).getString("description"));
+            a.setHumidity(WeatherStats.getInt("humidity"));
+            a.setCloudines(WeatherStats.getDouble("clouds"));
+            a.setWindSpeed(WeatherStats.getDouble("wind_speed"));
+            String icon = WeatherStats.getJSONArray("weather").getJSONObject(0).getString("icon");
+            String URLSting=WebsideForIcon+icon+WebsideForIconEnd;
+            URL url = new URL(URLSting);
+            ImageIcon image = new ImageIcon(url);
+            a.img_Weather=image;
             for(int i=0;i<47;i++){
               JSONObject zwischenWeather= (JSONObject) (currentWeather.getJSONArray("hourly").getJSONObject(i));
                currentWeather zwischenWeatherWeather = new currentWeather();
@@ -98,10 +111,13 @@ public class RequestWeather {
                     zwischenWetter.setHumidity(zwischenWeather.getInt("humidity"));
                     zwischenWetter.setCloudines(zwischenWeather.getInt("clouds"));
                     zwischenWetter.setWindSpeed(zwischenWeather.getDouble("wind_speed"));
+                    URL url2 = new URL(URLSting);
+                    ImageIcon image2 = new ImageIcon(url2);
+                    zwischenWetter.img_Weather=image;
                     a.setNext7Days(i, zwischenWetter);
                 }
             return a;
-        } catch (JSONException e) {
+        } catch (JSONException | MalformedURLException e) {
             e.printStackTrace();
         }
         System.out.println(a.getDescription());

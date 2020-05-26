@@ -2,12 +2,13 @@ package org.example;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 
 public class DayPreview extends JPanel{
     //Stuff for nextDay Preview
     JPanel forcastDay = new JPanel(new GridLayout(3, 1));
     JLabel Tag = new JLabel("test");
-    JPanel iconAusgabe = new JPanel();
+    JLabel iconAusgabe = new JLabel();
     JPanel Temps = new JPanel(new GridLayout(1, 2));
     JLabel minTemp=new JLabel("Temp");
     JLabel maxTemp= new JLabel("Temp");
@@ -24,8 +25,8 @@ public class DayPreview extends JPanel{
     public void setTag(String tag){
         Tag.setText(tag);
     }
-    public void setIconAusgabe(String text){
-       // iconAusgabe.
+    public void setIconAusgabe(ImageIcon a){
+       iconAusgabe.setIcon(a);
     }
     public void setMinTemp(double minimalTemp){
         String temp = Double.toString(minimalTemp);

@@ -1,5 +1,7 @@
 package org.example;
 
+import javax.swing.*;
+
 public class Weather {
     /**
      * Variable to safe the Citry of which we safe the weather
@@ -9,6 +11,10 @@ public class Weather {
      * provides a short description for the weather
      */
     public String description;
+    /**
+     * Variable to safe the Weather
+     */
+    public ImageIcon img_Weather;
     /**
      * varaible to safe the humidity
      */
@@ -129,6 +135,7 @@ public class Weather {
         this.humidity = humidity;
         this.cloudines = cloudines;
     }
+
 
     public double getCloudines() {
         return cloudines;
