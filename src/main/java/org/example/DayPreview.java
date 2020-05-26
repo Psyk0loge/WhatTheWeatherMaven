@@ -1,11 +1,18 @@
 package org.example;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.net.URL;
 
 public class DayPreview extends JPanel{
     //Stuff for nextDay Preview
+    Border blackline= BorderFactory.createLineBorder(Color.black);
+    Border raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
+    Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
+    Border raisedbevel = BorderFactory.createRaisedBevelBorder();
+    Border loweredbevel = BorderFactory.createLoweredBevelBorder();
     JPanel forcastDay = new JPanel(new GridLayout(3, 1));
     JLabel Tag = new JLabel("test");
     JLabel iconAusgabe = new JLabel();
@@ -22,6 +29,7 @@ public class DayPreview extends JPanel{
         Temps.add(lbl_maxTemp);
         Temps.add(maxTemp);
         forcastDay.add(Temps);
+        forcastDay.setBorder(raisedbevel);
         this.add(forcastDay);
         setVisible(true);
     }

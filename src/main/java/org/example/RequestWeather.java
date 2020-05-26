@@ -54,20 +54,22 @@ public class RequestWeather {
      * to safe the Longitude and the Latitude
      * * @param response ist ein Parameter, der sachen macht
      */
-    public void parse1(String response)  {
+    public void parse1(String response) {
+        JSONObject GeoStats;
+            try {
+                GeoStats = new JSONObject(response);
+                double lon = GeoStats.getJSONObject("coord").getDouble("lon");
+                double lat = GeoStats.getJSONObject("coord").getDouble("lat");
+                Lon = lon;
+                Lat = lat;
+                System.out.println(lon);
+                System.out.println(lat);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Fehler a = new Fehler();
+                System.out.println("LUL");
+            }
 
-        JSONObject GeoStats = null;
-        try {
-            GeoStats = new JSONObject(response);
-            double lon = GeoStats.getJSONObject("coord").getDouble("lon");
-            double lat = GeoStats.getJSONObject("coord").getDouble("lat");
-            Lon = lon;
-            Lat = lat;
-            System.out.println(lon);
-            System.out.println(lat);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
     /***
      *This method parses the JSON of the second request we make to the API-Url an safes the values in an Object of Weather

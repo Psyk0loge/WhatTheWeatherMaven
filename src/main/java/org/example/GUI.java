@@ -9,12 +9,15 @@ import java.awt.event.ActionListener;
 
 public class GUI extends JFrame{
     //Gui Stuff
-    JPanel content = new JPanel(new GridLayout(3,1));
+   // JPanel content = new JPanel(new GridLayout(3,1));
+    JPanel content = new JPanel(new BorderLayout());
     JPanel Top = new JPanel(new GridLayout(1,2));
     JPanel TopLeft = new JPanel(new GridLayout(4,2));
     JPanel TopRight = new JPanel(new GridLayout(3,1));
     JPanel Center = new JPanel();
     JPanel Bottom = new JPanel(new GridLayout(1,7));
+    JPanel BottomPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING));
+    JPanel TopPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING));
 
     RequestWeather b = new RequestWeather();
 
@@ -26,7 +29,7 @@ public class GUI extends JFrame{
     JLabel kurzBeschreibung = new JLabel();
     JLabel Temp = new JLabel();
     JTextField EingabeStadt = new JTextField();
-    JButton startAbfrage = new JButton("Windgeschwindigkeit");
+    JButton startAbfrage = new JButton("Abfrage starten");
     JLabel TagAusgabe = new JLabel("Tag");
     JLabel Uhrzeit = new JLabel("Uhrzeit");
     JLabel ImageAusgabe = new JLabel();
@@ -36,9 +39,12 @@ public class GUI extends JFrame{
 
 
     public GUI(){
+        System.out.println(LuftfeuchtigkeitsAusgabe.getHeight());
+        System.out.println(LuftfeuchtigkeitsAusgabe.getWidth());
+        LuftfeuchtigkeitsAusgabe.setSize(467, 20);
         Dimension a = new Dimension(10,10);
         TopLeft.setMaximumSize(a);
-        Dimension d = new Dimension(650,650);
+        Dimension d = new Dimension(950,650);
         this.setPreferredSize(d);
         TopLeft.add(EingabeStadt);
         TopLeft.add(startAbfrage);
@@ -53,8 +59,9 @@ public class GUI extends JFrame{
         TopRight.add(WindAusgabe);
         TopRight.add(LuftfeuchtigkeitsAusgabe);
         TopRight.add(Bewölkungsausgabe);
+        TopPanel.add(TopRight);
         Top.add(TopRight);
-        content.add(Top);
+        content.add(Top,BorderLayout.NORTH);
 
         Center.add(TemperaturVerlauf);
         content.add(Center);
@@ -63,7 +70,7 @@ public class GUI extends JFrame{
            tage[i]= new DayPreview();
            Bottom.add(tage[i]);
         }
-        content.add(Bottom);
+        content.add(Bottom,BorderLayout.SOUTH);
         startAbfrage.addActionListener(btn_startAbfrage);
 
 
@@ -71,10 +78,6 @@ public class GUI extends JFrame{
       this.setDefaultCloseOperation(EXIT_ON_CLOSE);
       this.setVisible(true);
       this.pack();
-
-
-
-
     }
     ActionListener btn_startAbfrage = new ActionListener() {
         @Override
@@ -103,6 +106,9 @@ public class GUI extends JFrame{
             }
         }
     };
+    public void fehlerAnzeigen(){
+      // JLabel.add(new JLabel("Diese Stadt ist Leider nicht "),BorderLayout.CENTER()) ;
+    }
 
     public static void main(String[] args) {
         new GUI();
