@@ -5,7 +5,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This class is used to display an error when the user
+ * requests a city that isn't found in the api databank
+ */
 public class Fehler extends JFrame {
+    /**
+     * constructor to create an instance of Fehler
+     */
     public Fehler(){
         Dimension b = new Dimension(500,500);
         this.setPreferredSize(b);

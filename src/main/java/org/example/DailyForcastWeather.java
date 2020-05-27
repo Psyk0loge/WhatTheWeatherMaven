@@ -19,11 +19,11 @@ public class DailyForcastWeather extends Weather {
     public double getMaxTemp() { return maxTemp; }
 
     public void setMaxTemp(double maxTemp) {
-        this.maxTemp = umrechnenTemp(maxTemp);
+        this.maxTemp = convertTemp(maxTemp);
     }
 
     public double getMinTemp() {
-        return umrechnenTemp(minTemp);
+        return convertTemp(minTemp);
     }
 
     public void setMinTemp(double minTemp) {

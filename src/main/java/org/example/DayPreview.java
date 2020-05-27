@@ -7,45 +7,82 @@ import java.awt.*;
 import java.net.URL;
 
 public class DayPreview extends JPanel{
-    //Stuff for nextDay Preview
-    Border blackline= BorderFactory.createLineBorder(Color.black);
-    Border raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
-    Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
+    /**
+     * Border to surround the DayPreview panels
+     */
     Border raisedbevel = BorderFactory.createRaisedBevelBorder();
-    Border loweredbevel = BorderFactory.createLoweredBevelBorder();
+    /**
+     * the panel to preview the day forecast
+     */
     JPanel forcastDay = new JPanel(new GridLayout(3, 1));
-    JLabel Tag = new JLabel("test");
-    JLabel iconAusgabe = new JLabel();
-    JPanel Temps = new JPanel(new GridLayout(2, 2));
+    /**
+     * label to display the workday
+     */
+    JLabel lbl_Tag = new JLabel("test");
+    /**
+     * label to display the icon od the previewDay
+     */
+    JLabel lbl_iconAusgabe = new JLabel();
+    /**
+     * panel to display the temperatures
+     */
+    JPanel temps = new JPanel(new GridLayout(2, 1));
+    /**
+     * Label to s
+     */
     JLabel lbl_minTemp = new JLabel("MinTemp:");
-    JLabel minTemp=new JLabel("Temp");
+    /**
+     * label to display the
+     */
     JLabel lbl_maxTemp = new JLabel("MaxTemp:");
-    JLabel maxTemp= new JLabel("Temp");
+
+    /**
+     * creates an instance of DayPreview
+     */
     public DayPreview() {
-        forcastDay.add(Tag);
-        forcastDay.add(iconAusgabe);
-        Temps.add(lbl_minTemp);
-        Temps.add(minTemp);
-        Temps.add(lbl_maxTemp);
-        Temps.add(maxTemp);
-        forcastDay.add(Temps);
+        forcastDay.add(lbl_Tag);
+        forcastDay.add(lbl_iconAusgabe);
+        temps.add(lbl_minTemp);
+        temps.add(lbl_maxTemp);
+        forcastDay.add(temps);
         forcastDay.setBorder(raisedbevel);
         this.add(forcastDay);
         setVisible(true);
     }
+
+    /**
+     * sets the text of lbl_Tag to tag
+     * @param tag parameter the we want to set as text for lbl_tag
+     */
     public void setTag(String tag){
-        Tag.setText(tag);
+        lbl_Tag.setText(tag);
     }
+
+    /**
+     *
+     * @param a the icon of the current weather we want to set
+     */
     public void setIconAusgabe(ImageIcon a){
-       iconAusgabe.setIcon(a);
+        lbl_iconAusgabe.setIcon(a);
     }
+
+    /**
+     * sets the text of the label
+     *
+     * @param minimalTemp the minimum temperature to display
+     */
     public void setMinTemp(double minimalTemp){
         String temp = Double.toString(minimalTemp);
-        this.minTemp.setText(temp+" Grad");
+        this.lbl_minTemp.setText("minTemp: "+temp+" Grad");
     }
+
+    /**
+     * set the text of lbl_maxTemp to the parameter maximalTemp
+     * @param maximalTemp the maximal temperature to display
+     */
     public void setMaxTemp(double maximalTemp){
         String temp = Double.toString(maximalTemp);
-        this.maxTemp.setText(temp+" Grad");
+        this.lbl_maxTemp.setText("maxTemp: "+temp+" Grad");
     }
 
 

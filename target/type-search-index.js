@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"org.example","l":"currentWeather"},{"p":"org.example","l":"DailyForcastWeather"},{"p":"org.example","l":"DayPreview"},{"p":"org.example","l":"Fehler"},{"p":"org.example","l":"GUI"},{"p":"org.example","l":"RequestWeather"},{"p":"org.example","l":"Weather"}]

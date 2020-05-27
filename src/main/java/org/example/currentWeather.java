@@ -11,11 +11,10 @@ public class currentWeather extends Weather {
      * @param gradKelvin
      */
     public void setTemp(double gradKelvin){
-        double Umrechentemp=gradKelvin-273.15;
-        Umrechentemp= Umrechentemp *100;
-        Umrechentemp = Math.round(Umrechentemp);
-        Umrechentemp = Umrechentemp/100;
-        this.temp=Umrechentemp;
+       double convertTemp= convertTemp(gradKelvin) *100;
+        convertTemp=round(convertTemp,2);
+        convertTemp = convertTemp/100;
+        this.temp=convertTemp;
     }
 
     /**
