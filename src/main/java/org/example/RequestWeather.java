@@ -82,13 +82,12 @@ public class RequestWeather {
         currentWeather a = new currentWeather();
         try {
             currentWeather = new JSONObject(responseBody);
-
             JSONObject WeatherStats = (currentWeather.getJSONObject("current"));
             a.setCity(city);
             a.setTemp(WeatherStats.getDouble("temp"));
             a.setDescription( WeatherStats.getJSONArray("weather").getJSONObject(0).getString("description"));
             a.setHumidity(WeatherStats.getInt("humidity"));
-            a.setCloudines(WeatherStats.getDouble("clouds"));
+            a.setCloudiness(WeatherStats.getDouble("clouds"));
             a.setWindSpeed(WeatherStats.getDouble("wind_speed"));
             String icon = WeatherStats.getJSONArray("weather").getJSONObject(0).getString("icon");
             String URLSting=WebsideForIcon+icon+WebsideForIconEnd;
@@ -111,11 +110,11 @@ public class RequestWeather {
                     zwischenWetter.setMinTemp(zwischenWeather.getJSONObject("temp").getDouble("min"));
                     zwischenWetter.setDescription(zwischenWeather.getJSONArray("weather").getJSONObject(0).getString("description"));
                     zwischenWetter.setHumidity(zwischenWeather.getInt("humidity"));
-                    zwischenWetter.setCloudines(zwischenWeather.getInt("clouds"));
+                    zwischenWetter.setCloudiness(zwischenWeather.getInt("clouds"));
                     zwischenWetter.setWindSpeed(zwischenWeather.getDouble("wind_speed"));
                     URL url2 = new URL(URLSting);
                     ImageIcon image2 = new ImageIcon(url2);
-                    zwischenWetter.img_Weather=image;
+                    zwischenWetter.img_Weather=image2;
                     a.setNext7Days(i, zwischenWetter);
                 }
             return a;

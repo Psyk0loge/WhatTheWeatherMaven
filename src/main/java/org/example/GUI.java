@@ -152,7 +152,7 @@ public class GUI extends JFrame{
             String Luftfeuchtigkeit = Luftfeuchte +" %";
             lbl_humidityOutput.setText(" humidity: "+Luftfeuchtigkeit);
             lbl_windSpeedOutput.setText("wind speed: "+windSpeedS +" KM/H");
-            double bewoelkung = cuWeather.getCloudines();
+            double bewoelkung = cuWeather.getCloudiness();
             lbl_cloudinessOutput.setText("cloudiness: "+bewoelkung+" %");
             double temp=cuWeather.getTemp();
             lbl_temp.setText(temp+" degrees");

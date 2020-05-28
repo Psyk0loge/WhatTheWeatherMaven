@@ -8,10 +8,10 @@ public class currentWeather extends Weather {
     /***
      * This Method sets the temp of the object of weather.
      * It also converts the temperature value from kelvin to celsius
-     * @param gradKelvin
+     * @param kelvin
      */
-    public void setTemp(double gradKelvin){
-       double convertTemp= convertTemp(gradKelvin) *100;
+    public void setTemp(double kelvin){
+       double convertTemp= convertTemp(kelvin) *100;
         convertTemp=round(convertTemp,2);
         convertTemp = convertTemp/100;
         this.temp=convertTemp;

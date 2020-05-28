@@ -85,7 +85,7 @@ public class Weather {
      * cloudiness in percent
      * @param cloudiness
      */
-    public void setCloudines(double cloudiness) {
+    public void setCloudiness(double cloudiness) {
         this.cloudiness = cloudiness;
     }
 
@@ -112,7 +112,7 @@ public class Weather {
      * the value has to be converted to celsius
      * @param kelvin the current temperature in kelvin
      */
-    public static double convertTemp(double kelvin){
+    public double convertTemp(double kelvin){
         double Umrechentemp=kelvin-273.15;
         Umrechentemp = round(Umrechentemp,2);
         return Umrechentemp;
@@ -191,7 +191,7 @@ public class Weather {
      *
      * @return int cloudiness in percent
      */
-    public double getCloudines() {
+    public double getCloudiness() {
         return cloudiness;
     }
 }
