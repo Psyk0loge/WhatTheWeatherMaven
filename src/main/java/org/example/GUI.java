@@ -98,6 +98,7 @@ public class GUI extends JFrame{
      * Konstruktor of the GUI
      */
     public GUI(){
+        this.setResizable(false);
         System.out.println(lbl_humidityOutput.getHeight());
         System.out.println(lbl_humidityOutput.getWidth());
         Dimension z = new Dimension(425,100);

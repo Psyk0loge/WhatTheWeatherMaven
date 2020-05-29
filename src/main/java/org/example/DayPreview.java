@@ -30,11 +30,11 @@ public class DayPreview extends JPanel{
     /**
      * Label to s
      */
-    JLabel lbl_minTemp = new JLabel("MinTemp:");
+    JLabel lbl_minTemp = new JLabel("Min:");
     /**
      * label to display the
      */
-    JLabel lbl_maxTemp = new JLabel("MaxTemp:");
+    JLabel lbl_maxTemp = new JLabel("Max:");
 
     /**
      * creates an instance of DayPreview
@@ -75,7 +75,7 @@ public class DayPreview extends JPanel{
      */
     public void setMinTemp(double minimalTemp){
         String temp = Double.toString(minimalTemp);
-        this.lbl_minTemp.setText("minTemp: "+temp+" Grad");
+        this.lbl_minTemp.setText("Min: "+temp+" Grad");
     }
 
     /**
@@ -84,7 +84,7 @@ public class DayPreview extends JPanel{
      */
     public void setMaxTemp(double maximalTemp){
         String temp = Double.toString(maximalTemp);
-        this.lbl_maxTemp.setText("maxTemp: "+temp+" Grad");
+        this.lbl_maxTemp.setText("Max: "+temp+" Grad");
     }
 
 
