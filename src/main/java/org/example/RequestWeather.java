@@ -3,6 +3,7 @@ package org.example;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import javax.swing.*;
 import java.io.BufferedReader;
@@ -13,38 +14,81 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
+/**
+ * this class makes two requests to the API-Provider.
+ * the request is triggered when the button btn_getDataListener is pressed
+ * From the first request we get the longitude and latitude for the second request.
+ * The second request provides the data the we use and display on the GUI
+ */
+
 public class RequestWeather {
-    //Api-Key
     /***
      * appid is a variable that safes the API-Key for weather requests
      */
     private final String appid= "9ffde3100f0029f1e405581994739b1e";
-
-    //URL parts to get the longitude and the latitude
+    /**
+     * is the first part of the URL for our first request as a String
+     */
     private final String WebsideForRequest ="http://api.openweathermap.org/data/2.5/weather?q=";
+    /**
+     * ist the middle part of the URl for the first request
+     */
     private final String URLmidCode ="&units=metric&appid=";
+
     private HttpURLConnection connection;
 
-    //URL part for icon request
+    /**
+     * This is the first part of an URL used to start a request to get the icon
+     */
     private final String WebsideForIcon="http://openweathermap.org/img/w/";
+    /**
+     * This String is the end part of the URL to request the icon provided in the data
+     */
     private final String WebsideForIconEnd=".png";
 
 
-    //URL stuff to get the data
+    /**
+     * This is the first part of the URL used to request the data safed as String
+     */
     private final String WebsideDataRequest ="https://api.openweathermap.org/data/2.5/onecall?";
-    private String URLmidDataRequest = "&%20exclude=hourly&appid=";
+    /**
+     * This is the middle part of the URL to request the get the Data
+     */
+    private String URLmidDataRequest = "&%20exclude=minutely&appid=";
+    /**
+     * this is a String to safe small parts of the 2nd URl for Data Request as String
+     */
     private String LatURL="lat=";
+    /**
+     * this is a String to safe small parts of the 2nd URl for Data Request as String
+     */
     private String LonURL="&lon=";
+    /**
+     * a String variable to safe the requested city
+     */
     private String city;
 
+    /**
+     * Method to set the city variable
+     * @param city
+     */
     public void setCity(String city){
         this.city = city;
     }
 
-    //changable lon and lat Strings for dynamic request
+    /**
+     * Variable to safe the latitude provided by the first request
+     */
     public double Lat;
+    /**
+     * Variable to safe the longitude provided by the first request
+     */
     public double Lon;
 
+    /**
+     * constructor Method of RequestWeather, it returns an instance of the currentWeather class
+     * @return
+     */
     public Weather RequestWeather(){
        return verbindung(true);
     }
@@ -112,7 +156,9 @@ public class RequestWeather {
                     zwischenWetter.setHumidity(zwischenWeather.getInt("humidity"));
                     zwischenWetter.setCloudiness(zwischenWeather.getInt("clouds"));
                     zwischenWetter.setWindSpeed(zwischenWeather.getDouble("wind_speed"));
-                    URL url2 = new URL(URLSting);
+                    String icon2 = zwischenWeather.getJSONArray("weather").getJSONObject(0).getString("icon");
+                    String URLSting2=WebsideForIcon+icon2+WebsideForIconEnd;
+                    URL url2 = new URL(URLSting2);
                     ImageIcon image2 = new ImageIcon(url2);
                     zwischenWetter.img_Weather=image2;
                     a.setNext7Days(i, zwischenWetter);

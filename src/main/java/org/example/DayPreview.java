@@ -41,6 +41,8 @@ public class DayPreview extends JPanel{
      */
     public DayPreview() {
         forcastDay.add(lbl_Tag);
+        Dimension d = new Dimension(125,125);
+        forcastDay.setPreferredSize(d);
         forcastDay.add(lbl_iconAusgabe);
         temps.add(lbl_minTemp);
         temps.add(lbl_maxTemp);

@@ -75,6 +75,7 @@ public class Weather {
     }
 
     /**
+     * sets the humidity (double) double percent
      * @param humidity humidity in percent
      */
     public void setHumidity(int humidity) {
@@ -90,8 +91,8 @@ public class Weather {
     }
 
     /**
-     *
-     * @param city the city that was requested as String
+     * sets city as the city that was requested as String
+     * @param city :String
      */
     public void setCity(String city) {
         this.city = city;
@@ -125,22 +126,22 @@ public class Weather {
     public Weather() {
     }
     /**
-     *
-     * @return returns the requested city
+     *returns the requested city
+     * @return String city
      */
     public String getCity() {
         return city;
     }
     /**
-     *
-     * @return returns a short description of the weather
+     *returns a short description of the weather
+     * @return description String
      */
     public String getDescription() {
         return description;
     }
     /**
-     *
-     * @return returns an array with seven weather objects
+     *returns an array with seven weather objects
+     * @return Weather[7]
      */
     public Weather[] getNext7Days() {
         return Next7Days;
@@ -156,7 +157,7 @@ public class Weather {
     }
 
     /**
-     *
+     *returns the humidity (double) in percent
      * @return return int humidity
      */
     public double getHumidity() {
@@ -188,7 +189,7 @@ public class Weather {
         return Math.round(value * d) / d;
     }
     /**
-     *
+     *returns the cloudiness (double) in percent
      * @return int cloudiness in percent
      */
     public double getCloudiness() {

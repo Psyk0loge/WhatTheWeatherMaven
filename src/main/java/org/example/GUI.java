@@ -100,9 +100,10 @@ public class GUI extends JFrame{
     public GUI(){
         System.out.println(lbl_humidityOutput.getHeight());
         System.out.println(lbl_humidityOutput.getWidth());
-        lbl_humidityOutput.setSize(467, 20);
-        Dimension a = new Dimension(10,10);
-        TopLeft.setMaximumSize(a);
+        Dimension z = new Dimension(425,100);
+        TopLeft.setPreferredSize(z);
+        Dimension a = new Dimension(950,100);
+        Top.setMaximumSize(a);
         Dimension d = new Dimension(950,650);
         this.setPreferredSize(d);
         TopLeft.add(txt_enterCity);
@@ -126,7 +127,7 @@ public class GUI extends JFrame{
 
         for(int i =0;i<7;i++){
             days[i]= new DayPreview();
-           Bottom.add(days[i]);
+            Bottom.add(days[i]);
         }
         content.add(Bottom,BorderLayout.SOUTH);
         btn_getData.addActionListener(btn_getDataListener);
@@ -156,7 +157,7 @@ public class GUI extends JFrame{
             lbl_cloudinessOutput.setText("cloudiness: "+bewoelkung+" %");
             double temp=cuWeather.getTemp();
             lbl_temp.setText(temp+" degrees");
-            lbl_ImageAusgabe .setIcon(cuWeather.img_Weather);
+            lbl_ImageAusgabe.setIcon(cuWeather.img_Weather);
             for(int i=0;i<7;i++){
                 DayPreview d = days[i];
                 d.setMaxTemp(cuWeather.Next7Days[i].getMaxTemp());
