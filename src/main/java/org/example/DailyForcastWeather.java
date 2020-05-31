@@ -1,5 +1,8 @@
 package org.example;
 
+/**
+ * A Class to safe the daily forcast of weather it therefore provides variables like maxTemp an minTemp
+ */
 public class DailyForcastWeather extends Weather {
     private double maxTemp;
     private double minTemp;

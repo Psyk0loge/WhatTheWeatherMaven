@@ -2,6 +2,9 @@ package org.example;
 
 import javax.swing.*;
 
+/**
+ * The weather class provides the shared attributes and Methods of currentWeather an DayPreview
+ */
 public class Weather {
     /**
      * variable to safes the city of which the user wants to know the weather

@@ -6,6 +6,9 @@ import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.net.URL;
 
+/**
+ * The class that implements a Jpanel that can be filled with data to preview the weatherData of the next Days
+ */
 public class DayPreview extends JPanel{
     /**
      * Border to surround the DayPreview panels

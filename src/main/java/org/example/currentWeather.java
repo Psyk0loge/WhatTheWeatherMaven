@@ -1,5 +1,8 @@
 package org.example;
 
+/**
+ * A class to safe the current Weatherdata
+ */
 public class currentWeather extends Weather {
     /**
      * safes the value for temperature
