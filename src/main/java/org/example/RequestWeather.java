@@ -117,35 +117,35 @@ public class RequestWeather {
     }
     /***
      *This method parses the JSON of the second request we make to the API-Url an safes the values in an Object of Weather
-     * @param responseBody ist das JSON das von unserem zweiten Request an die Api kommt und eingelesen wurde
+     * @param response ist das JSON das von unserem zweiten Request an die Api kommt und eingelesen wurde als String gespeichert
      *
      * @return
      */
-    public currentWeather parse2(String responseBody){
-        JSONObject currentWeather;
+    public currentWeather parse2(String response){
+        JSONObject currentWeatherJ;
         currentWeather a = new currentWeather();
         try {
-            currentWeather = new JSONObject(responseBody);
-            JSONObject WeatherStats = (currentWeather.getJSONObject("current"));
+            JSONObject Response = new JSONObject(response);
+            currentWeatherJ = Response.getJSONObject("current");
             a.setCity(city);
-            a.setTemp(WeatherStats.getDouble("temp"));
-            a.setDescription( WeatherStats.getJSONArray("weather").getJSONObject(0).getString("description"));
-            a.setHumidity(WeatherStats.getInt("humidity"));
-            a.setCloudiness(WeatherStats.getDouble("clouds"));
-            a.setWindSpeed(WeatherStats.getDouble("wind_speed"));
-            String icon = WeatherStats.getJSONArray("weather").getJSONObject(0).getString("icon");
+            a.setTemp(currentWeatherJ.getDouble("temp"));
+            a.setDescription( currentWeatherJ.getJSONArray("weather").getJSONObject(0).getString("description"));
+            a.setHumidity(currentWeatherJ.getInt("humidity"));
+            a.setCloudiness(currentWeatherJ.getDouble("clouds"));
+            a.setWindSpeed(currentWeatherJ.getDouble("wind_speed"));
+            String icon = currentWeatherJ.getJSONArray("weather").getJSONObject(0).getString("icon");
             String URLSting=WebsideForIcon+icon+WebsideForIconEnd;
             URL url = new URL(URLSting);
             ImageIcon image = new ImageIcon(url);
             a.img_Weather=image;
             for(int i=0;i<47;i++){
-              JSONObject zwischenWeather= (JSONObject) (currentWeather.getJSONArray("hourly").getJSONObject(i));
+              JSONObject hourly= (JSONObject) (Response.getJSONArray("hourly").getJSONObject(i));
                currentWeather zwischenWeatherWeather = new currentWeather();
                double temp =zwischenWeatherWeather.getTemp();
                 a.setNext48Hours(i,temp);
             }
 
-                JSONArray daily= (currentWeather.getJSONArray("daily"));
+                JSONArray daily= (Response.getJSONArray("daily"));
                 for(int i=0;i<7;i++) {
                     DailyForcastWeather zwischenWetter = new DailyForcastWeather();
                     JSONObject zwischenWeather = daily.getJSONObject(i);
@@ -184,7 +184,7 @@ public class RequestWeather {
         BufferedReader reader;
         String line;
         StringBuffer responseContent = new StringBuffer();
-        currentWeather b = new currentWeather();
+        currentWeather requestedWeather = new currentWeather();
         if(geoAbfrage){
             URLString = WebsideForRequest + city + URLmidCode +appid;
         }else{
@@ -213,11 +213,10 @@ public class RequestWeather {
             }
             if(geoAbfrage){
                 parse1(responseContent.toString());
-               b= verbindung(false);
+               requestedWeather= verbindung(false);
                 connection.disconnect();
             }else{
-                System.out.println(Lon+" "+Lat);
-                b= parse2(responseContent.toString());
+                requestedWeather= parse2(responseContent.toString());
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -226,6 +225,6 @@ public class RequestWeather {
         }finally{
             connection.disconnect();
         }
-        return b;
+        return requestedWeather;
     }
 }
