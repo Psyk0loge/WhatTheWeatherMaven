@@ -1,2 +1,2 @@
 # WhatTheWeatherMaven
-The same as What the Weather but as a Maven Project to handel the dependencies
+A project for university to use apis to gather information
